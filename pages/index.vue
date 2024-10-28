@@ -1,8 +1,7 @@
 <template>
     <div>
       <LMap
-        style="height:100vh; 
-        width:100vw"
+        style="height:100vh; width:100vw"
         id="heatmap"
         ref="map"
         :zoom="zoom"
@@ -26,46 +25,108 @@
     const imageOverlayUrl = ref("/bm-canvas-image.png")
     const width = ref(100);
     const height = ref(100);
-    const radius = ref(100)
-    const intensity = ref(2000.0)
     const crs = L.CRS.Simple;
 
     const bounds = computed(() =>
         [
-        [0, 0],
-        [height.value, width.value],
+            [0, 0],
+            [height.value, width.value],
         ] as L.LatLngBoundsLiteral
     );
     const onMapReady = async () => {
-        const heat = await useLHeat({
-            leafletObject: map.value?.leafletObject,
-            heatPoints: heatPoints.value,
-            // (optional) radius : default 50
-        });
         L.imageOverlay(imageOverlayUrl.value, bounds.value).setZIndex(-1).addTo(map.value.leafletObject)
-        L.rectangle(bounds.value,{stroke: false}).addTo(map.value.leafletObject)
+        const base = await useLHeat({
+            leafletObject: map.value?.leafletObject,
+            heatPoints: sensors.value,
+            // (optional) radius : default 50
+            radius: 70
+        });
+        base.setOptions(
+            {
+                gradient: gradient, 
+                blur: 56, 
+                pane: "shadowPane",
+                maxZoom: 3
+            }
+        )
     }
 
-    // Create heat data
-    const heatPoints = ref([{
-        lat: 49,
-        lng: 58,
-        intensity: 2000
-    }, {
-        lat: 60.4,
-        lng: 60.7,
-        intensity: 1000
-    }, {
-        lat: 45.5,
-        lng: 80.5,
-        intensity: 2500
-    }, {
-        lat: 52.5,
-        lng: 82.5,
-        intensity: 1250
-    }, {
-        lat: 50,
-        lng: 91,
-        intensity: 2000
-    }]);
+    const gradient = {
+        0.1: '#011981', 
+        0.2: '#0041ff', 
+        0.3: '#0096ff',
+        0.4: '#b9ebff',
+        0.5: '#fffff0',
+        0.6: '#fffff0',
+        0.7: '#fbf505',
+        0.8: '#ff9900',
+        0.9: '#ff2a02',
+        1: '#b41069',
+    }
+
+    // List of data provided by sensors, each object is a sensor.
+    //lat = y(inverted), lng = x
+    const sensors = ref([
+        {
+            lat: 71,
+            lng: 3,
+            intensity: .9
+        }, {
+            lat: 71,
+            lng: 19,
+            intensity: 0.7
+        }, {
+            lat: 71,
+            lng: 35,
+            intensity: 0.5
+        }, {
+            lat: 71,
+            lng: 49.5,
+            intensity: 0.3
+        }, {
+            lat: 71,
+            lng: 63.5,
+            intensity: 0.3
+        }, {
+            lat: 56,
+            lng: 3,
+            intensity: 0.7
+        }, {
+            lat: 56,
+            lng: 19,
+            intensity: 0.5
+        }, {
+            lat: 56,
+            lng: 35,
+            intensity: 0.3
+        }, {
+            lat: 56,
+            lng: 49.5,
+            intensity: 1
+        }, {
+            lat: 56,
+            lng: 63,
+            intensity: 0.8
+        }, {
+            lat: 41,
+            lng: 3,
+            intensity: 0.5
+        }, {
+            lat: 41,
+            lng: 19,
+            intensity: 0.5
+        }, {
+            lat: 41,
+            lng: 35,
+            intensity: 0.6
+        }, {
+            lat: 41,
+            lng: 49.5,
+            intensity: 0.4
+        }, {
+            lat: 41,
+            lng: 63,
+            intensity: 0.3
+        }
+    ]);
 </script>
