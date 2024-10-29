@@ -42,6 +42,9 @@ importers:
       sass-embedded:
         specifier: ^1.80.4
         version: 1.80.4
+      simpleheat:
+        specifier: ^0.4.0
+        version: 0.4.0
 
 packages:
 
@@ -2862,6 +2865,9 @@ packages:
 
   simple-git@3.27.0:
     resolution: {integrity: sha512-ivHoFS9Yi9GY49ogc6/YAi3Fl9ROnF4VyubNylgCkA+RVqLaKWnDSzXOVzya8csELIaWaYNutsEuAhZrtOjozA==}
+
+  simpleheat@0.4.0:
+    resolution: {integrity: sha512-tdg3I1NvzMdPKscWBrHbF0LBf+VWuBBazzGUPtFJjG5Q12VQX6gPY8jLy9hx5CbgAIVc5nfnePwJvAYK6z1rAA==}
 
   sirv@2.0.4:
     resolution: {integrity: sha512-94Bdh3cC2PKrbgSOUqTiGPWVZeSiXfKOVZNJniWoqrWrRkB1CJzBU3NEbiTsPcYy1lDsANA/THzS+9WBiy5nfQ==}
@@ -6392,6 +6398,8 @@ snapshots:
       debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
+
+  simpleheat@0.4.0: {}
 
   sirv@2.0.4:
     dependencies:
